@@ -56,7 +56,6 @@ async def send_message_handler(msg: types.Message, state: FSMContext, session):
         session.add(Setting())
         session.commit()
         setting = session.get(Setting, 1)
-    print(photo)
     setattr(setting, state_data['button_name'], text)
     setattr(setting, state_data['button_name'] + "_photo", photo)
     session.commit()

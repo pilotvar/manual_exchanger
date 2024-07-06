@@ -24,7 +24,7 @@ async def start_handler(msg: types.Message, state: FSMContext, session):
 
     setting = session.get(Setting, 1)
 
-    if setting:
+    if setting and setting.start:
         text = setting.start
         photo = setting.start_photo
     else:
@@ -32,7 +32,6 @@ async def start_handler(msg: types.Message, state: FSMContext, session):
         photo = None
 
     await send_message_button_to_support("/start", msg.from_user)
-    print(photo)
     if photo:
         return await msg.answer_photo(
             photo,
@@ -63,7 +62,7 @@ async def tech_handler(msg: types.Message, state: FSMContext, session):
     await state.update_data({})
     setting = session.get(Setting, 1)
 
-    if setting:
+    if setting and setting.tech:
         text = setting.tech
         photo = setting.tech_photo
     else:
@@ -111,7 +110,6 @@ async def send_message_to_support(message):
     try:
         bot = Bot(BOT_TOKEN, parse_mode=ParseMode.HTML)
         builder = answer_buttons(message.from_user.id)
-        print(message.from_user)
         content = f"От: {message.from_user.full_name}\nID: {message.from_user.id}\n\n"
         document = message.document
         photos = message.photo
